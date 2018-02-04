@@ -8,7 +8,7 @@ import java.util.Random;
 public class MSWindow extends JFrame
 {
     CodeBehind cb;
-    final static int WIDTH =500, LENGTH = 500,BUTTON_COL = 16, BUTTON_ROW = 16;
+    final static int WIDTH =700, LENGTH = 700,BUTTON_COL = 16, BUTTON_ROW = 16;
     JButton[][] buttons;
     public void setButtonDisplay(int row, int col, char c)
     {

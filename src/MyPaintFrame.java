@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.LinkedList;
 
 enum Shape {
     LINE, OVAL, RECTANGLE
@@ -101,6 +102,7 @@ class ButtonPanel extends JPanel {
 
 class CanvasPanel extends JPanel {
     PaintModel p;
+    LinkedList<DrawnItem> drawnItems = new LinkedList<>();
     CanvasPanel(PaintModel pm) {
     p = pm;
         setSize(600, 500);
@@ -111,37 +113,66 @@ class CanvasPanel extends JPanel {
                 super.mousePressed(e);
                 x1 = e.getX();
                 y1 = e.getY();
-                System.out.println("Pressed");
+
 
             }
+
 
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                Graphics2D g = (Graphics2D) getGraphics();
+
                 super.mouseReleased(e);
                 x2 = e.getX();
                 y2 = e.getY();
-                System.out.println("Released");
-                g.setStroke(new BasicStroke(3));
-                g.setColor(p.color);
-
-                switch (p.shape)
-                {
-                    case LINE:
-                        g.drawLine(x1,y1,x2,y2);
-                        break;
-                    case OVAL:
-                        g.drawOval(Math.min(x1,x2),Math.min(y1,y2),Math.abs(x2-x1),Math.abs(y2-y1));
-                        break;
-                    case RECTANGLE:
-                        g.drawRect(Math.min(x1,x2),Math.min(y1,y2),Math.abs(x2-x1),Math.abs(y2-y1));
-                }
-
-
+                DrawnItem d = new DrawnItem(x1,x2,y1,y2,p.shape,p.color);
+                drawnItems.add(d);
+                drawShape(d,(Graphics2D) getGraphics());
             }
 
         });
+
+    }
+    public void drawShape(DrawnItem d, Graphics2D g)
+    {
+
+        g.setStroke(new BasicStroke(3));
+        g.setColor(d.color);
+
+        switch (d.shape)
+        {
+            case LINE:
+                g.drawLine(d.x1,d.y1,d.x2,d.y2);
+                break;
+            case OVAL:
+                g.drawOval(Math.min(d.x1,d.x2),Math.min(d.y1,d.y2),Math.abs(d.x2-d.x1),Math.abs(d.y2-d.y1));
+                break;
+            case RECTANGLE:
+                g.drawRect(Math.min(d.x1,d.x2),Math.min(d.y1,d.y2),Math.abs(d.x2-d.x1),Math.abs(d.y2-d.y1));
+        }
+    }
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        for(DrawnItem di : drawnItems)
+        {
+            drawShape(di,(Graphics2D) g);
+        }
+    }
+}
+class DrawnItem
+{
+    final int x1,x2,y1,y2;
+    Shape shape;
+    Color color;
+    public DrawnItem(int x1,int x2,int y1,int y2, Shape s, Color c)
+    {
+        this. x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.shape = s;
+        this.color = c;
     }
 
 }

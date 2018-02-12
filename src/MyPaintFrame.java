@@ -15,7 +15,7 @@ public class MyPaintFrame extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        setSize(600, 600);
+        setSize(800, 800);
     }
 }
 
@@ -65,10 +65,6 @@ class ButtonPanel extends JPanel {
                 p.setColor(new Color(0, 0, 0));
             }
         });
-        add(b);
-        add(b2);
-        add(b3);
-        add(b4);
 
         JButton b5 = new JButton("Oval");
         b5.addActionListener(new ActionListener() {
@@ -92,7 +88,13 @@ class ButtonPanel extends JPanel {
             }
         });
         setSize(600, 100);
-        add(b5);add(b6);add(b7);
+        add(b);
+        add(b2);
+        add(b3);
+        add(b4);
+        add(b5);
+        add(b6);
+        add(b7);
     }
 }
 
@@ -112,11 +114,7 @@ class CanvasPanel extends JPanel {
                 System.out.println("Pressed");
 
             }
-            @Override
-            public void mouseDragged(MouseEvent e )
-            {
-                System.out.println("Dragged");
-            }
+
 
             @Override
             public void mouseReleased(MouseEvent e) {
